@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -19,15 +18,15 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    if (!email || !password) return;
 
+    setLoading(true);
+    
     try {
       await login(email, password);
       router.push("/");
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
+    } catch {
+      // Handle login error
       setLoading(false);
     }
   };

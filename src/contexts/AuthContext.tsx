@@ -1,75 +1,95 @@
+import { createContext, useContext, useState, useEffect } from "react";
+import { User } from "@/types";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { User, AuthContextType } from "@/types";
+interface AuthContextType {
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
+}
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  login: async () => {},
+  register: async () => {},
+  logout: () => {},
+});
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("quora_user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    setLoading(true);
+  // Simulate authentication with mock data
+  const login = async (email: string) => {
     try {
-      const mockUser: User = {
-        id: "1",
-        name: "John Doe",
-        email,
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        bio: "Software developer passionate about technology",
-        reputation: 1250,
-        createdAt: new Date()
-      };
-      setUser(mockUser);
-      localStorage.setItem("quora_user", JSON.stringify(mockUser));
-    } finally {
-      setLoading(false);
+      // Simulate API call
+      setTimeout(() => {
+        setUser({
+          id: "user-1",
+          name: "John Doe",
+          email,
+          avatar: "",
+          reputation: 120,
+          createdAt: new Date(),
+        });
+      }, 1000);
+    } catch {
+      // Handle error silently for now
     }
   };
 
-  const register = async (name: string, email: string, password: string) => {
-    setLoading(true);
+  const register = async (name: string, email: string) => {
     try {
-      const mockUser: User = {
-        id: Math.random().toString(36).substr(2, 9),
-        name,
-        email,
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        bio: "",
-        reputation: 0,
-        createdAt: new Date()
-      };
-      setUser(mockUser);
-      localStorage.setItem("quora_user", JSON.stringify(mockUser));
-    } finally {
-      setLoading(false);
+      // Simulate API call
+      setTimeout(() => {
+        setUser({
+          id: "user-1",
+          name,
+          email,
+          avatar: "",
+          reputation: 0,
+          createdAt: new Date(),
+        });
+      }, 1000);
+    } catch {
+      // Handle error silently for now
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("quora_user");
   };
 
+  // Check for existing session on load
+  useEffect(() => {
+    // Simulate checking local storage or cookies
+    const checkAuth = () => {
+      const savedUser = localStorage.getItem("quora_user");
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+        } catch {
+          localStorage.removeItem("quora_user");
+        }
+      }
+    };
+    
+    checkAuth();
+  }, []);
+
+  // Save user to localStorage when it changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("quora_user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("quora_user");
+    }
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-}
+export const useAuth = () => useContext(AuthContext);

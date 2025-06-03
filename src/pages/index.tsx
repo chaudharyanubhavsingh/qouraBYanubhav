@@ -1,10 +1,9 @@
-
 import Head from "next/head";
 import { useAuth } from "@/contexts/AuthContext";
 import QuestionFeed from "@/components/Questions/QuestionFeed";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Users, MessageCircle, TrendingUp } from "lucide-react";
+import { Plus, Users, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {

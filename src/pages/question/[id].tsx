@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -45,11 +44,14 @@ export default function QuestionDetailPage() {
         id: "current-user",
         name: "Current User",
         avatar: "",
-        reputation: 0
+        reputation: 0,
+        email: "user@example.com",
+        createdAt: new Date()
       },
       upvotes: 0,
       downvotes: 0,
       createdAt: new Date(),
+      updatedAt: new Date(),
       userVote: null
     };
     

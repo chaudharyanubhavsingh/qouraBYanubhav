@@ -4,8 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, Plus, User, LogOut } from "lucide-react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/router";
 
 export default function Header() {

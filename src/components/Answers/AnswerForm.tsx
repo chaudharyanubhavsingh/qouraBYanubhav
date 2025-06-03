@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -6,11 +5,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface AnswerFormProps {
-  questionId: string;
+  questionId: string; // Used to associate the answer with the question
   onSubmit: (content: string) => void;
 }
 
-export default function AnswerForm({ questionId, onSubmit }: AnswerFormProps) {
+export default function AnswerForm({ onSubmit }: AnswerFormProps) {
   const { user } = useAuth();
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
