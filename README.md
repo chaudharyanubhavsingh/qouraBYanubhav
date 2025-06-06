@@ -18,10 +18,6 @@ This is a basic clone of [Quora](https://www.quora.com/) built as part of an int
 - React.js (if used)
 - Bootstrap or Tailwind (optional)
 
-> Backend:
-- Node.js / Express.js (or any other used)
-- MongoDB / MySQL (depending on your DB)
-- REST APIs
 
 ## 🚀 Getting Started
 
@@ -32,16 +28,8 @@ git clone https://github.com/chaudharyanubhavsingh/qouraBYanubhav.git
 cd qouraBYanubhav
 npm install
 npm start
-# In frontend folder
-npm start
 
-# In backend folder
-npm run server
 ```
-qouraBYanubhav/
-├── backend/           # API and database logic
-├── frontend/          # UI and React components
-├── README.md
 
 ---
 
